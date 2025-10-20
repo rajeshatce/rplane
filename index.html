@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunnyvale HOA</title>
+    <style>
+        /* ==== Reset & Base ==== */
+        *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+        body { font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color:#333; background:#f9f9fb; }
+        a { color:#0066cc; text-decoration:none; }
+        a:hover { text-decoration:underline; }
+
+        /* ==== Layout ==== */
+        .container { max-width: 1100px; margin:auto; padding:0 1rem; }
+        header { background:#004080; color:#fff; padding:1rem 0; position:relative; }
+        header h1 { font-size:1.8rem; }
+        nav ul { list-style:none; display:flex; gap:1.5rem; flex-wrap:wrap; }
+        nav a { color:#fff; font-weight:600; }
+
+        /* ==== Hamburger (mobile) ==== */
+        .hamburger {
+            display: none;               /* hidden on desktop */
+            cursor:pointer;
+            width:30px;
+            height:24px;
+            position:absolute;
+            right:1rem;
+            top:1.2rem;
+        }
+        .hamburger span {
+            background:#fff;
+            display:block;
+            height:4px;
+            margin:5px 0;
+            border-radius:2px;
+            transition:0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(6px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(7px,-7px); }
+
+        /* ==== Mobile nav ==== */
+        @media (max-width: 768px) {
+            .hamburger { display:block; }
+            nav ul {
+                position:absolute;
+                top:100%; left:0; right:0;
+                background:#004080;
+                flex-direction:column;
+                align-items:center;
+                max-height:0;
+                overflow:hidden;
+                transition:max-height .3s ease;
+            }
+            nav ul.open { max-height:300px; }   /* enough for all items */
+            nav a { padding:0.75rem 0; width:100%; text-align:center; }
+        }
+
+        main { padding:2rem 0; }
+        section { margin-bottom:3rem; }
+        h2 { color:#004080; margin-bottom:0.5rem; border-bottom:2px solid #004080; padding-bottom:0.25rem; }
+        .card { background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,.1); }
+        .grid { display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); }
+        footer { background:#004080; color:#fff; text-align:center; padding:1rem 0; font-size:0.9rem; }
+
+        /* ==== Forms ==== */
+        form label { display:block; margin-top:1rem; font-weight:600; }
+        form input, form textarea, form select { width:100%; padding:0.5rem; margin-top:0.25rem; border:1px solid #ccc; border-radius:4px; }
+        form button { margin-top:1rem; background:#0066cc; color:#fff; border:none; padding:0.75rem 1.5rem; border-radius:4px; cursor:pointer; }
+        form button:hover { background:#004080; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Sunnyvale Homeowners Association</h1>
+
+        <!-- Hamburger button -->
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- ==== Hero ==== -->
+    <section id="home">
+        <div class="card">
+            <h2>Welcome to Sunnyvale</h2>
+            <p>A friendly, well-maintained community of 250 homes. Use this site to stay updated, pay dues, submit requests, and connect with neighbors.</p>
+            <p><strong>Next Board Meeting:</strong> <span id="next-meeting">Loading…</span></p>
+        </div>
+    </section>
+
+    <!-- ==== News ==== -->
+    <section id="news">
+        <h2>Latest Announcements</h2>
+        <div class="grid">
+            <article class="card">
+                <h3>Pool Re-Opening</h3>
+                <p><small>Oct 15, 2025</small></p>
+                <p>The community pool will reopen on November 1 after annual maintenance.</p>
+            </article>
+            <article class="card">
+                <h3>Annual Dues Reminder</h3>
+                <p><small>Oct 10, 2025</small></p>
+                <p>Dues for 2026 are $350, payable by Dec 31. Pay online <a href="#contact">here</a>.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- ==== Events Calendar ==== -->
+    <section id="events">
+        <h2>Upcoming Events</h2>
+        <div class="card">
+            <ul id="event-list">
+                <!-- Filled by JS -->
+            </ul>
+        </div>
+    </section>
+
+    <!-- ==== Documents ==== -->
+    <section id="documents">
+        <h2>Important Documents</h2>
+        <div class="card">
+            <ul>
+                <li><a href="#" onclick="alert('Download will be added soon'); return false;">Bylaws (PDF)</a></li>
+                <li><a href="#" onclick="alert('Download will be added soon'); return false;">Meeting Minutes – Sep 2025</a></li>
+                <li><a href="#" onclick="alert('Download will be added soon'); return false;">Budget 2025</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ==== Contact / Request Form ==== -->
+    <section id="contact">
+        <h2>Contact the Board</h2>
+        <div class="card">
+            <form id="contact-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+
+                <label for="subject">Subject</label>
+                <select id="subject" required>
+                    <option value="">-- Choose --</option>
+                    <option>Maintenance Request</option>
+                    <option>Architectural Review</option>
+                    <option>General Inquiry</option>
+                </select>
+
+                <label for="message">Message</label>
+                <textarea id="message" rows="4" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+            <p id="form-status" style="margin-top:1rem; color:green;"></p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        © <span id="year"></span> Sunnyvale HOA • All rights reserved • <a href="mailto:board@sunnyvalehoa.org" style="color:#fff;">board@sunnyvalehoa.org</a>
+    </div>
+</footer>
+
+<script>
+    // ==== Hamburger toggle ====
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('open');
+    });
+
+    // Close menu when a link is clicked (nice UX on mobile)
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('open');
+        });
+    });
+
+    // ==== Dynamic Year ====
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ==== Next Meeting ====
+    const nextMeeting = new Date('2025-11-12T19:00');
+    const fmt = { weekday:'long', month:'long', day:'numeric', hour:'numeric', minute:'numeric' };
+    document.getElementById('next-meeting').textContent = nextMeeting.toLocaleString(undefined, fmt);
+
+    // ==== Sample Events ====
+    const events = [
+        {date:'2025-11-05', title:'Fall Clean-Up Day', time:'9:00 AM'},
+        {date:'2025-11-20', title:'Holiday Decorating Contest', time:'6:00 PM'},
+        {date:'2025-12-10', title:'Annual Holiday Party', time:'7:00 PM'}
+    ];
+    const eventList = document.getElementById('event-list');
+    events.forEach(ev => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${new Date(ev.date).toLocaleDateString()}</strong> – ${ev.title} <em>(${ev.time})</em>`;
+        eventList.appendChild(li);
+    });
+
+    // ==== Form Submission (demo only) ====
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const status = document.getElementById('form-status');
+        status.textContent = 'Thank you! Your message has been sent.';
+        status.style.color = 'green';
+        this.reset();
+        setTimeout(() => status.textContent = '', 5000);
+    });
+</script>
+
+</body>
+</html>
