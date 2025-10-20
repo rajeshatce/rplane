@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Sunnyvale HOA</title>
+    <style>
+        /* ==== Same shared styles as index.html ==== */
+        *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+        body { font-family: Arial, Helvetica, sans-serif; line-height: 1.6; color:#333; background:#f9f9fb; }
+        a { color:#0066cc; text-decoration:none; }
+        a:hover { text-decoration:underline; }
+
+        .container { max-width: 1100px; margin:auto; padding:0 1rem; }
+        header { background:#004080; color:#fff; padding:1rem 0; position:relative; }
+        header h1 { font-size:1.8rem; }
+        nav ul { list-style:none; display:flex; gap:1.5rem; flex-wrap:wrap; }
+        nav a { color:#fff; font-weight:600; }
+
+        .hamburger { display:none; cursor:pointer; width:30px; height:24px; position:absolute; right:1rem; top:1.2rem; }
+        .hamburger span { background:#fff; display:block; height:4px; margin:5px 0; border-radius:2px; transition:0.3s; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(6px,6px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(7px,-7px); }
+
+        @media (max-width: 768px) {
+            .hamburger { display:block; }
+            nav ul {
+                position:absolute; top:100%; left:0; right:0;
+                background:#004080; flex-direction:column; align-items:center;
+                max-height:0; overflow:hidden; transition:max-height .3s ease;
+            }
+            nav ul.open { max-height:500px; }
+            nav a { padding:0.75rem 0; width:100%; text-align:center; }
+        }
+
+        main { padding:2rem 0; }
+        section { margin-bottom:3rem; }
+        h2 { color:#004080; margin-bottom:0.5rem; border-bottom:2px solid #004080; padding-bottom:0.25rem; }
+        .card { background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,.1); }
+
+        /* ==== Photo Gallery ==== */
+        .gallery-grid {
+            display: grid; gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+        .gallery-item {
+            position: relative; overflow: hidden; border-radius: 8px;
+            cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.9); justify-content:center; align-items:center;
+            z-index:1000; padding:1rem;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%; max-height: 85vh; border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute; top:20px; right:25px; color:#fff;
+            font-size:2rem; font-weight:bold; cursor:pointer;
+            background:rgba(0,0,0,0.5); width:40px; height:40px;
+            border-radius:50%; display:flex; justify-content:center; align-items:center;
+        }
+
+        /* ==== Video Gallery ==== */
+        .video-grid {
+            display: grid; gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .video-item {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .video-item iframe {
+            position: absolute; top:0; left:0; width:100%; height:100%; border:0;
+        }
+
+        footer { background:#004080; color:#fff; text-align:center; padding:1rem 0; font-size:0.9rem; }
+
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .video-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Sunnyvale HOA</h1>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#news">News</a></li>
+                <li><a href="index.html#events">Events</a></li>
+                <li><a href="gallery.html" style="font-weight:bold;">Gallery</a></li>
+                <li><a href="index.html#documents">Documents</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+    <!-- Back to Home -->
+    <p style="margin-bottom:1rem;">
+        <a href="index.html" style="color:#0066cc;">Back to Home</a>
+    </p>
+
+    <!-- PHOTO GALLERY -->
+    <section id="photo-gallery">
+        <h2>Photo Gallery</h2>
+        <div class="card">
+            <div class="gallery-grid">
+                <!-- Replace with your images -->
+                <div class="gallery-item" data-src="https://via.placeholder.com/800x600?text=Pic+1">
+                    <img src="https://via.placeholder.com/400x300?text=Pic+1" alt="Event">
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/800x600?text=Pic+2">
+                    <img src="https://via.placeholder.com/400x300?text=Pic+2" alt="Pool">
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/800x600?text=Pic+3">
+                    <img src="https://via.placeholder.com/400x300?text=Pic+3" alt="Holiday">
+                </div>
+                <div class="gallery-item" data-src="https://via.placeholder.com/800x600?text=Pic+4">
+                    <img src="https://via.placeholder.com/400x300?text=Pic+4" alt="Park">
+                </div>
+                <!-- Add more -->
+            </div>
+        </div>
+
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox">
+            <span class="lightbox-close" id="close-lightbox">×</span>
+            <img id="lightbox-img" src="" alt="Enlarged">
+        </div>
+    </section>
+
+    <!-- VIDEO GALLERY -->
+    <section id="video-gallery">
+        <h2>Video Gallery</h2>
+        <div class="card">
+            <div class="video-grid">
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Welcome" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/9bZkp7q19f0" title="Pool Tour" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://player.vimeo.com/video/76979871" title="Event" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                </div>
+            </div>
+            <p style="margin-top:1rem; font-size:0.9rem; color:#666;">
+                <em>Upload to YouTube/Vimeo and embed using share links.</em>
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        © <span id="year"></span> Sunnyvale HOA • All rights reserved
+    </div>
+</footer>
+
+<script>
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('open');
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('open');
+        });
+    });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('close-lightbox');
+
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+            lightboxImg.src = item.getAttribute('data-src');
+            lightbox.classList.add('active');
+        });
+    });
+
+    closeBtn.addEventListener('click', () => lightbox.classList.remove('active'));
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) lightbox.classList.remove('active');
+    });
+</script>
+
+</body>
+</html>
