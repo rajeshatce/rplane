@@ -167,6 +167,31 @@
             object-fit: cover;
             border-bottom: 3px solid #004080;
         }
+        /* ==== MOBILE: Image on Left, Text on Right ==== */
+        @media (max-width: 600px) {
+            .member-card {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                padding: 1rem;
+            }
+            .member-photo {
+                width: 120px;
+                height: 120px;
+                margin-right: 1rem;
+                border-radius: 50%; /* Circular */
+                border: 3px solid #004080;
+                object-fit: cover;
+            }
+            .member-info {
+                flex: 1;
+                padding: 0;
+            }
+            .member-info h3 { font-size: 1.1rem; margin: 0 0 0.5rem; }
+            .member-info p.role { font-size: 0.95rem; margin: 0 0 0.3rem; }
+            .member-info p.phone { font-size: 0.9rem; margin: 0; }
+            .committee-grid { grid-template-columns: 1fr; }
+        }
         .member-info {
             padding: 1rem;
         }
